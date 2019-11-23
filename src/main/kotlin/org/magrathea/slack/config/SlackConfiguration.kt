@@ -1,10 +1,8 @@
 package org.magrathea.slack.config
 
 import com.github.seratch.jslack.Slack
-import com.github.seratch.jslack.SlackConfig
 import com.github.seratch.jslack.api.methods.request.oauth.OAuthAccessRequest
 import javax.enterprise.context.Dependent
-import javax.enterprise.inject.Default
 import javax.enterprise.inject.Produces
 import javax.inject.Inject
 
@@ -12,7 +10,6 @@ import javax.inject.Inject
 class SlackConfiguration {
 
     @Inject
-    @field: Default
     lateinit var slackConfigurationProperties: SlackConfigurationProperties
 
     @Produces

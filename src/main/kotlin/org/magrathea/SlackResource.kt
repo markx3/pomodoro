@@ -8,17 +8,18 @@ import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 
 @Path("/pomodoro")
-class SlackResource {
-
+class SlackResource
     @Inject
-    private lateinit var slackService: ISlackService
+    constructor(private val slackService: ISlackService) {
 
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    fun start(@Form slackSlashCommandRequest: SlackSlashCommandRequest) : String {
-        if (slackSlashCommandRequest.getMessage() == "start") {
-            slackService.setDoNotDisturb(slackSlashCommandRequest.getToken())
+    fun start(@Form slackSlashCommandRequest: SlackSlashCommandRequest): String {
+        if (slackSlashCommandRequest.message == "start") {
+            slackService.setDoNotDisturb(
+                requireNotNull(slackSlashCommandRequest.token) { "Slack token cannot be null" }
+            )
 
             // TODO So much. :)
             return "Pomodoro started"

@@ -7,24 +7,21 @@ import javax.enterprise.inject.Produces
 import javax.inject.Inject
 
 @Dependent
-class SlackConfiguration {
-
+class SlackConfiguration
     @Inject
-    lateinit var slackConfigurationProperties: SlackConfigurationProperties
+    constructor(private val slackConfigurationProperties: SlackConfigurationProperties) {
 
     @Produces
-    fun slack() : Slack {
-        val slack = Slack.getInstance()
-
-        slack.methods().oauthAccess(oAuthAccessRequest());
-
-        return slack
+    fun slack(): Slack {
+        return Slack.getInstance().apply {
+            methods().oauthAccess(oAuthAccessRequest())
+        }
     }
 
-    private fun oAuthAccessRequest() : OAuthAccessRequest {
+    private fun oAuthAccessRequest(): OAuthAccessRequest {
        return OAuthAccessRequest.builder()
-               .clientId(slackConfigurationProperties.getClientId())
-               .clientSecret(slackConfigurationProperties.getClientSecret())
+               .clientId(slackConfigurationProperties.clientId)
+               .clientSecret(slackConfigurationProperties.clientSecret)
                .build()
     }
 }

@@ -5,23 +5,11 @@ import javax.ws.rs.FormParam
 class SlackSlashCommandRequest {
 
     @FormParam("user_id")
-    private var userId : String = ""
+    var userId: String? = null
 
     @FormParam("text")
-    private var message : String = ""
+    var message: String? = null
 
     @FormParam("token")
-    private var token : String = ""
-
-    fun getUserId() : String {
-        return userId;
-    }
-
-    fun getMessage() : String {
-        return message;
-    }
-
-    fun getToken() : String {
-        return token;
-    }
+    var token: String? = null
 }

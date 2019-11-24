@@ -5,6 +5,6 @@ import io.quarkus.arc.config.ConfigProperties
 @ConfigProperties(prefix = "slack")
 interface SlackConfigurationProperties {
 
-    fun getClientId() : String
-    fun getClientSecret() : String
+    val clientId: String
+    val clientSecret: String
 }

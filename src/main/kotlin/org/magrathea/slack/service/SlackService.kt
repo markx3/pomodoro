@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @Default
 @ApplicationScoped
-open class SlackService(@Inject val slack: Slack) : ISlackService {
+open class SlackService(@Inject private val slack: Slack) : ISlackService {
 
     override fun setDoNotDisturb(token: String) {
         SlackSetDoNotDisturbInteractor.execute(slack.methods(token))

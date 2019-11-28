@@ -8,7 +8,7 @@ class SlackSlashCommandRequest {
     var userId: String? = null
 
     @FormParam("text")
-    var message: String? = null
+    var text: String? = null
 
     @FormParam("token")
     var token: String? = null

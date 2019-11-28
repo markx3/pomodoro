@@ -7,4 +7,5 @@ interface SlackConfigurationProperties {
 
     val clientId: String
     val clientSecret: String
+    val oAuthToken: String
 }

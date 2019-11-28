@@ -16,13 +16,16 @@ class SlackResource
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     fun start(@Form slackSlashCommandRequest: SlackSlashCommandRequest): String {
-        if (slackSlashCommandRequest.message == "start") {
-            slackService.setDoNotDisturb(
-                requireNotNull(slackSlashCommandRequest.token) { "Slack token cannot be null" }
-            )
+        if (slackSlashCommandRequest.text == "start") {
+            slackService.setDoNotDisturb()
 
-            // TODO So much. :)
             return "Pomodoro started"
+        }
+
+        if (slackSlashCommandRequest.text == "stop") {
+            slackService.stopDoNotDisturb()
+
+            return "Pomodoro stopped"
         }
 
         return "Unknown action"

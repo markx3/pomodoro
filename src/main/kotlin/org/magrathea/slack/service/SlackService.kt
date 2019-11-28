@@ -13,11 +13,7 @@ import javax.inject.Inject
 @ApplicationScoped
 open class SlackService(slack: Slack, slackConfigurationProperties: SlackConfigurationProperties) : ISlackService {
 
-    var methodsClient: MethodsClient? = null
-
-    init {
-        this.methodsClient = slack.methods(slackConfigurationProperties.oAuthToken)
-    }
+    private val methodsClient: MethodsClient = slack.methods(slackConfigurationProperties.oAuthToken)
 
     override fun handlePomodoroRequest(slackSlashCommandRequest: SlackSlashCommandRequest): String {
         when (slackSlashCommandRequest.text) {
@@ -29,13 +25,13 @@ open class SlackService(slack: Slack, slackConfigurationProperties: SlackConfigu
     }
 
      private fun setDoNotDisturb(): String {
-        methodsClient?.let { SlackSetDoNotDisturbInteractor.execute(it) }
+        SlackSetDoNotDisturbInteractor.execute(methodsClient)
 
          return "Pomodoro started"
     }
 
     private fun stopDoNotDisturb(): String {
-        methodsClient?.let { SlackStopDoNotDisturbInteractor.execute(it) }
+        SlackStopDoNotDisturbInteractor.execute(methodsClient)
 
         return "Pomodoro stopped"
     }

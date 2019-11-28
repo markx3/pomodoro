@@ -7,10 +7,10 @@ import com.github.seratch.jslack.api.methods.request.dnd.DndSetSnoozeRequest
 object SlackSetDoNotDisturbInteractor {
 
     fun execute(methodsClient: MethodsClient) {
-          methodsClient.apply {
-              dndSetSnooze {
-                  it.numMinutes(25)
-              }
-          }
+        methodsClient.apply {
+            dndSetSnooze {
+                it.numMinutes(25)
+            }
+        }
     }
 }

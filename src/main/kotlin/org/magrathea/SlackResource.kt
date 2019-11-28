@@ -8,9 +8,7 @@ import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 
 @Path("/pomodoro")
-class SlackResource
-    @Inject
-    constructor(private val slackService: ISlackService) {
+class SlackResource(private val slackService: ISlackService) {
 
     @POST
     @Produces(MediaType.TEXT_PLAIN)

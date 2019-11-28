@@ -3,6 +3,7 @@ package org.magrathea.slack.service
 import com.github.seratch.jslack.Slack
 import com.github.seratch.jslack.api.methods.MethodsClient
 import org.magrathea.slack.config.SlackConfigurationProperties
+import org.magrathea.slack.dto.SlackSlashCommandRequest
 import org.magrathea.slack.interactor.SlackSetDoNotDisturbInteractor
 import org.magrathea.slack.interactor.SlackStopDoNotDisturbInteractor
 import javax.enterprise.context.ApplicationScoped
@@ -18,11 +19,24 @@ open class SlackService(slack: Slack, slackConfigurationProperties: SlackConfigu
         this.methodsClient = slack.methods(slackConfigurationProperties.oAuthToken)
     }
 
-    override fun setDoNotDisturb() {
-        methodsClient?.let { SlackSetDoNotDisturbInteractor.execute(it) };
+    override fun handlePomodoroRequest(slackSlashCommandRequest: SlackSlashCommandRequest): String {
+        when (slackSlashCommandRequest.text) {
+            "start" -> return setDoNotDisturb()
+            "stop" -> return stopDoNotDisturb()
+        }
+
+        return "Unknown command"
     }
 
-    override fun stopDoNotDisturb() {
+     private fun setDoNotDisturb(): String {
+        methodsClient?.let { SlackSetDoNotDisturbInteractor.execute(it) }
+
+         return "Pomodoro started"
+    }
+
+    private fun stopDoNotDisturb(): String {
         methodsClient?.let { SlackStopDoNotDisturbInteractor.execute(it) }
+
+        return "Pomodoro stopped"
     }
 }

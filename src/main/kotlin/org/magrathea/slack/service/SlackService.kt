@@ -16,16 +16,15 @@ open class SlackService(slack: Slack, slackConfigurationProperties: SlackConfigu
     private val methodsClient: MethodsClient = slack.methods(slackConfigurationProperties.oAuthToken)
 
     override fun handlePomodoroRequest(slackSlashCommandRequest: SlackSlashCommandRequest): String {
-        when (slackSlashCommandRequest.text) {
-            "start" -> return setDoNotDisturb()
-            "stop" -> return stopDoNotDisturb()
+        return when (slackSlashCommandRequest.text) {
+            "start" -> setDoNotDisturb()
+            "stop" -> stopDoNotDisturb()
+            else -> "Unknown command"
         }
-
-        return "Unknown command"
     }
 
      private fun setDoNotDisturb(): String {
-        SlackSetDoNotDisturbInteractor.execute(methodsClient)
+         SlackSetDoNotDisturbInteractor.execute(methodsClient)
 
          return "Pomodoro started"
     }
